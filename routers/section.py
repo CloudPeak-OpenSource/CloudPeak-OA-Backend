@@ -16,6 +16,7 @@ router = APIRouter(tags=["Section"])
     name="获取所有部门列表",
     description="需要权限 `oa:section:list`。",
     dependencies=[Depends(fief_auth.authenticated(permissions=["oa:section:list"]))],
+    response_model=list[Section],
 )
 async def get_all_sections(engine: AIOEngine = Depends(get_database)):
     return await engine.find(Section)
@@ -26,6 +27,7 @@ async def get_all_sections(engine: AIOEngine = Depends(get_database)):
     name="创建部门",
     description="需要权限 `oa:section:create`。",
     dependencies=[Depends(fief_auth.authenticated(permissions=["oa:section:create"]))],
+    response_model=Section,
 )
 async def create_section(section: Section, engine: AIOEngine = Depends(get_database)):
     return await engine.save(section)
@@ -36,6 +38,7 @@ async def create_section(section: Section, engine: AIOEngine = Depends(get_datab
     name="更新部门",
     description="注意：部门 id 不允许更新，需要权限 `oa:section:update`。",
     dependencies=[Depends(fief_auth.authenticated(permissions=["oa:section:update"]))],
+    response_model=Section,
 )
 async def update_section(
     section_id: ObjectId,

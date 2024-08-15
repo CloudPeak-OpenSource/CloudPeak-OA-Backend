@@ -4,14 +4,14 @@ from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
 from odmantic import AIOEngine
 
-from config import DATABASE_URL
+from config import DATABASE_NAME, DATABASE_URL
 from routers import auth, section, staff
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     client = AsyncIOMotorClient(DATABASE_URL)
-    app.db_engine = AIOEngine(client)
+    app.db_engine = AIOEngine(client, database=DATABASE_NAME)
 
     yield
 
