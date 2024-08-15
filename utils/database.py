@@ -3,4 +3,4 @@ from odmantic import AIOEngine
 
 
 def get_database(request: Request) -> AIOEngine:
-    return request.app.engine
+    return request.app.db_engine

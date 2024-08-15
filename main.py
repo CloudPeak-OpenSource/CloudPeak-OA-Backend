@@ -5,13 +5,17 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from odmantic import AIOEngine
 
 from config import DATABASE_URL
-from routers import auth
+from routers import auth, section, staff
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    app.engine = AIOEngine(AsyncIOMotorClient(DATABASE_URL))
+    client = AsyncIOMotorClient(DATABASE_URL)
+    app.db_engine = AIOEngine(client)
+
     yield
+
+    client.close()
 
 
 app = FastAPI(
@@ -20,6 +24,9 @@ app = FastAPI(
         "name": "LGPL-3.0",
         "url": "https://www.gnu.org/licenses/lgpl-3.0.zh-cn.html",
     },
+    lifespan=lifespan,
 )
 
 app.include_router(auth.router, prefix="/auth")
+app.include_router(staff.router, prefix="/staff")
+app.include_router(section.router, prefix="/section")
