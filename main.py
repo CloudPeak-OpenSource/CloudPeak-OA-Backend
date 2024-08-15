@@ -1,6 +1,18 @@
-from fastapi import FastAPI
+from contextlib import asynccontextmanager
 
+from fastapi import FastAPI
+from motor.motor_asyncio import AsyncIOMotorClient
+from odmantic import AIOEngine
+
+from config import DATABASE_URL
 from routers import auth
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    app.engine = AIOEngine(AsyncIOMotorClient(DATABASE_URL))
+    yield
+
 
 app = FastAPI(
     title="CloudPeak OA Backend",
