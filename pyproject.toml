@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "cloudpeak-oa-backend"
+version = "0.0.1-alpha.1"
+description = ""
+authors = ["XYCode Kerman <xycode-xyc@outlook.com>"]
+license = "LGPL-3.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.13"
+fastapi = "^0.112.0"
+uvicorn = "^0.30.6"
+python-dotenv = "^1.0.1"
+odmantic = "^1.0.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
