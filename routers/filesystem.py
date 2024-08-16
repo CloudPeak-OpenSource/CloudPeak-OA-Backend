@@ -7,9 +7,13 @@ from fastapi.responses import StreamingResponse
 from motor.motor_asyncio import AsyncIOMotorGridFSBucket
 from odmantic.bson import ObjectId
 
+from utils import fief_auth
 from utils.database import get_gridfs
 
-router = APIRouter(tags=["Filesystem"])
+router = APIRouter(
+    tags=["Filesystem"],
+    dependencies=[Depends(fief_auth.authenticated(permissions=["oa:file"]))],
+)
 
 
 @router.get("/file", name="下载文件", response_class=StreamingResponse)
