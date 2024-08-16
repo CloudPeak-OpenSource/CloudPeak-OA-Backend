@@ -22,13 +22,6 @@ async def get_user_info(
 async def auth_callback(request: Request, response: Response, code: str = Query()):
     tokens, _ = await fief.auth_callback(code, str(request.url_for("OAuth Callback")))
 
-    response = RedirectResponse(AUTH_REDIRECT)
-    response.set_cookie(
-        SESSION_COOKIE_NAME,
-        tokens["access_token"],
-        max_age=tokens["expires_in"],
-        secure=False,
-        httponly=True,
-    )
+    response = RedirectResponse(f"{AUTH_REDIRECT}#{tokens['access_token']}")
 
     return response

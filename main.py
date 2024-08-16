@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorGridFSBucket
 from odmantic import AIOEngine
 
@@ -32,3 +33,11 @@ app.include_router(auth.router, prefix="/auth")
 app.include_router(staff.router, prefix="/staff")
 app.include_router(section.router, prefix="/section")
 app.include_router(filesystem.router, prefix="/filesystem")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)

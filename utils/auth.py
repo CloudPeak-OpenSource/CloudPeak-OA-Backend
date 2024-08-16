@@ -1,5 +1,5 @@
 from fastapi import HTTPException, Request, Response
-from fastapi.security import APIKeyCookie, OAuth2AuthorizationCodeBearer
+from fastapi.security import APIKeyCookie, APIKeyHeader, OAuth2AuthorizationCodeBearer
 from fief_client import FiefAsync
 from fief_client.integrations.fastapi import FiefAuth
 
@@ -41,7 +41,7 @@ class CustomFiefAuth(FiefAuth):
 #     auto_error=False,
 # )
 
-scheme = APIKeyCookie(
+scheme = APIKeyHeader(
     name=SESSION_COOKIE_NAME,
     auto_error=False,
 )
